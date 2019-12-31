@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="UnsplashImageDownload" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Phto....." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="64l-S7-0zL">
+                                <rect key="frame" x="16" y="40" width="382" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xbn-Cm-2V6">
+                                <rect key="frame" x="0.0" y="84" width="414" height="728"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="0.0" id="bbQ-Pr-UbX">
+                                    <size key="itemSize" width="180" height="279"/>
+                                    <size key="estimatedItemSize" width="180" height="279"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="2" minY="2" maxX="2" maxY="2"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="imageCell" id="adY-Ok-SOt" customClass="ImageCollectionViewCell" customModule="UnsplashImageDownload" customModuleProvider="target">
+                                        <rect key="frame" x="2" y="2" width="180" height="279"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Etp-8t-N1G">
+                                            <rect key="frame" x="0.0" y="0.0" width="180" height="279"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8NL-gG-4J6">
+                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="279"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="8NL-gG-4J6" secondAttribute="bottom" id="At4-Ia-tMq"/>
+                                                <constraint firstAttribute="trailing" secondItem="8NL-gG-4J6" secondAttribute="trailing" id="Oji-i0-m9T"/>
+                                                <constraint firstItem="8NL-gG-4J6" firstAttribute="leading" secondItem="Etp-8t-N1G" secondAttribute="leading" id="S26-U8-muE"/>
+                                                <constraint firstItem="8NL-gG-4J6" firstAttribute="top" secondItem="Etp-8t-N1G" secondAttribute="top" id="pgr-rp-ZNt"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="180" height="279"/>
+                                        <connections>
+                                            <outlet property="userSelectedImageView" destination="8NL-gG-4J6" id="OFb-zP-WmS"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="FJh-2d-iNf"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="xvb-1C-7VQ"/>
+                                </connections>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jeo-EH-evh">
+                                <rect key="frame" x="16" y="816" width="382" height="50"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Search">
+                                    <color key="titleColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="didTapSearchButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GFX-qk-fJQ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="64l-S7-0zL" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="40" id="7hP-FM-8Ge"/>
+                            <constraint firstItem="xbn-Cm-2V6" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="GfV-ye-gWB"/>
+                            <constraint firstItem="xbn-Cm-2V6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="KU1-p1-bTR"/>
+                            <constraint firstItem="jeo-EH-evh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="X8d-J7-Uua"/>
+                            <constraint firstItem="jeo-EH-evh" firstAttribute="top" secondItem="xbn-Cm-2V6" secondAttribute="bottom" constant="4" id="a9k-py-T8v"/>
+                            <constraint firstItem="64l-S7-0zL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="bFY-gk-8pu"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xbn-Cm-2V6" secondAttribute="trailing" id="idR-ly-b2F"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="64l-S7-0zL" secondAttribute="trailing" constant="16" id="ixK-1p-IG9"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jeo-EH-evh" secondAttribute="trailing" constant="16" id="lbl-vb-A5M"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="xbn-Cm-2V6" secondAttribute="bottom" constant="50" id="py2-vP-2eG"/>
+                            <constraint firstItem="xbn-Cm-2V6" firstAttribute="top" secondItem="64l-S7-0zL" secondAttribute="bottom" constant="10" id="rr9-Q6-c51"/>
+                            <constraint firstItem="jeo-EH-evh" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="4" id="v9Z-Tc-vmz"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="selectedImagesCollectionView" destination="xbn-Cm-2V6" id="3UY-wa-VdH"/>
+                        <outlet property="userSearchPhtoTextField" destination="64l-S7-0zL" id="J3c-sK-saN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="129.91071428571428"/>
+        </scene>
+    </scenes>
+</document>

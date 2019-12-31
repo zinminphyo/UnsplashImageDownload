@@ -1,0 +1,6 @@
+framework module Pods_UnsplashImageDownload {
+  umbrella header "Pods-UnsplashImageDownload-umbrella.h"
+
+  export *
+  module * { export * }
+}
