@@ -9,20 +9,56 @@
 import UIKit
 import UnsplashPhotoPicker
 
-class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UnsplashPhotoPickerDelegate {
+class ViewController:UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UnsplashPhotoPickerDelegate{
+    
+    
     
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var userSearchPhtoTextField: UITextField!
-    var userSelectedImages : [UnsplashPhoto] = []
+     var userSelectedImages : [UnsplashPhoto] = []
     @IBOutlet weak var selectedImagesCollectionView: UICollectionView!
     var bottomConstraint : NSLayoutConstraint?
+    private let itemsPerRow: CGFloat = 3
+    private let sectionInsets = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 20.0, right: 20.0)
+    
+    func unsplashPhotoPicker(_ photoPicker: UnsplashPhotoPicker, didSelectPhotos photos: [UnsplashPhoto]) {
+        for photo in photos {
+        self.userSelectedImages.append(photo)
+               let imageURL = photo.urls[.regular]
+               let session = URLSession.shared
+               guard let unwrappedURL = imageURL else {  print("Error unwrapping urls.");  return }
+               let dataTask = session.dataTask(with: unwrappedURL) { (data, response, error) in
+                   guard let unwrappedData = data else {print("Error unwrappping data"); return}
+                   let imageData = NSData(data: unwrappedData)
+                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData as Data)!, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
+           }
+            dataTask.resume()
+           selectedImagesCollectionView.reloadSections(IndexSet(integer: 0))
+    }
+    }
+    
+    func unsplashPhotoPickerDidCancel(_ photoPicker: UnsplashPhotoPicker) {
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return userSelectedImages.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let selectImage = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.IMAGE_IDENTIFIER, for: indexPath) as! ImageCollectionViewCell
+        if let phtoCell = selectImage as? ImageCollectionViewCell {
+            let photo = userSelectedImages[indexPath.row]
+            phtoCell.downloadPhoto(photo)
+        }
+        
+        return selectImage
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         selectedImagesCollectionView.reloadSections(IndexSet(integer: 0))
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIApplication.keyboardWillChangeFrameNotification, object: nil)
-      //  bottomConstraint = NSLayoutConstraint(item: searchBtn!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
-      //  self.view.addConstraint(bottomConstraint!)
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -31,40 +67,10 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     @IBAction func didTapSearchButton(_ sender: UIButton) {
         let configuration = UnsplashPhotoPickerConfiguration(accessKey: Constants.ACCESS_KEY, secretKey: Constants.SECRET_KEY,query: userSearchPhtoTextField.text,allowsMultipleSelection: true)
         let unsplahPhotoPicker = UnsplashPhotoPicker(configuration: configuration)
-        unsplahPhotoPicker.photoPickerDelegate = self as? UnsplashPhotoPickerDelegate
+        unsplahPhotoPicker.photoPickerDelegate = self
         present(unsplahPhotoPicker, animated: true, completion: nil)
     }
-    func unsplashPhotoPicker(_ photoPicker: UnsplashPhotoPicker, didSelectPhotos photos: [UnsplashPhoto]) {
-        for photo in photos {
-            userSelectedImages.append(photo)
-        }
-        selectedImagesCollectionView.reloadSections(IndexSet(integer: 0))
-    }
     
-    func unsplashPhotoPickerDidCancel(_ photoPicker: UnsplashPhotoPicker) {
-        
-    }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return userSelectedImages.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let userSelectedImage = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.IMAGE_IDENTIFIER, for: indexPath) as! ImageCollectionViewCell
-        let imageURL = userSelectedImages[indexPath.row].urls[.regular]
-        let session = URLSession.shared
-        guard let unwrappedURL = imageURL else {  print("Error unwrapping urls.");  return userSelectedImage}
-        let dataTask = session.dataTask(with: unwrappedURL) { (data, response, error) in
-            guard let unwrappedData = data else {print("Error unwrappping data"); return}
-            let imageData = NSData(data: unwrappedData)
-            DispatchQueue.main.async {
-                userSelectedImage.userSelectedImageView.image = UIImage(data: imageData as Data)
-                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData as Data)!, self, #selector(self.image(_:didFinishSavingWithError:contextInfo:)), nil)
-            }
-        }
-        dataTask.resume()
-        
-        return userSelectedImage
-    }
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
@@ -84,10 +90,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
 
         UIViewPropertyAnimator(duration: duration, curve: curve, animations: {            self.additionalSafeAreaInsets.bottom = self.view.frame.height - endFrame.origin.y
             self.view.layoutIfNeeded()
-            print("Search button frame height is \(self.searchBtn.frame.height)")
         }).startAnimation()
     }
 
 }
-
-
