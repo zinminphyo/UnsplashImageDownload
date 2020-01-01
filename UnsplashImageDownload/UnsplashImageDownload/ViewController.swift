@@ -9,9 +9,8 @@
 import UIKit
 import UnsplashPhotoPicker
 
-class ViewController:UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UnsplashPhotoPickerDelegate{
-    
-    
+class ViewController:UIViewController,UICollectionViewDelegate,
+UICollectionViewDataSource,UnsplashPhotoPickerDelegate{
     
     @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var userSearchPhtoTextField: UITextField!
@@ -36,15 +35,12 @@ class ViewController:UIViewController,UICollectionViewDelegate,UICollectionViewD
            selectedImagesCollectionView.reloadSections(IndexSet(integer: 0))
     }
     }
-    
     func unsplashPhotoPickerDidCancel(_ photoPicker: UnsplashPhotoPicker) {
         
     }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return userSelectedImages.count
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let selectImage = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.IMAGE_IDENTIFIER, for: indexPath) as! ImageCollectionViewCell
         if let phtoCell = selectImage as? ImageCollectionViewCell {
@@ -54,7 +50,6 @@ class ViewController:UIViewController,UICollectionViewDelegate,UICollectionViewD
         
         return selectImage
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         selectedImagesCollectionView.reloadSections(IndexSet(integer: 0))
@@ -70,7 +65,6 @@ class ViewController:UIViewController,UICollectionViewDelegate,UICollectionViewD
         unsplahPhotoPicker.photoPickerDelegate = self
         present(unsplahPhotoPicker, animated: true, completion: nil)
     }
-    
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
@@ -92,5 +86,7 @@ class ViewController:UIViewController,UICollectionViewDelegate,UICollectionViewD
             self.view.layoutIfNeeded()
         }).startAnimation()
     }
-
 }
+
+//UICollectionViewDelegateFlowLayout
+
