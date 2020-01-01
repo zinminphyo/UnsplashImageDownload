@@ -11,15 +11,23 @@ import UnsplashPhotoPicker
 
 class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UnsplashPhotoPickerDelegate {
     
+    @IBOutlet weak var searchBtn: UIButton!
     @IBOutlet weak var userSearchPhtoTextField: UITextField!
     var userSelectedImages : [UnsplashPhoto] = []
     @IBOutlet weak var selectedImagesCollectionView: UICollectionView!
+    var bottomConstraint : NSLayoutConstraint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         selectedImagesCollectionView.reloadSections(IndexSet(integer: 0))
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIApplication.keyboardWillChangeFrameNotification, object: nil)
+      //  bottomConstraint = NSLayoutConstraint(item: searchBtn!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+      //  self.view.addConstraint(bottomConstraint!)
     }
-
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.selectedImagesCollectionView.contentInset.bottom = searchBtn.frame.height
+    }
     @IBAction func didTapSearchButton(_ sender: UIButton) {
         let configuration = UnsplashPhotoPickerConfiguration(accessKey: Constants.ACCESS_KEY, secretKey: Constants.SECRET_KEY,query: userSearchPhtoTextField.text,allowsMultipleSelection: true)
         let unsplahPhotoPicker = UnsplashPhotoPicker(configuration: configuration)
@@ -59,7 +67,6 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     }
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
-            // we got back an error!
             let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
@@ -68,6 +75,17 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
             ac.addAction(UIAlertAction(title: "OK", style: .default))
             present(ac, animated: true)
         }
+    }
+    @objc func keyboardWillChangeFrame(_ notification: Notification) {
+        guard let endFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double ?? 0.3
+        let curveRawValue = notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Int ?? 0
+        let curve: UIView.AnimationCurve = UIView.AnimationCurve(rawValue: curveRawValue) ?? .easeInOut
+
+        UIViewPropertyAnimator(duration: duration, curve: curve, animations: {            self.additionalSafeAreaInsets.bottom = self.view.frame.height - endFrame.origin.y
+            self.view.layoutIfNeeded()
+            print("Search button frame height is \(self.searchBtn.frame.height)")
+        }).startAnimation()
     }
 
 }

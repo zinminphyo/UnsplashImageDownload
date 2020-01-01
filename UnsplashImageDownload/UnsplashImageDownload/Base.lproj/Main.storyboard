@@ -17,12 +17,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Phto....." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="64l-S7-0zL">
-                                <rect key="frame" x="16" y="40" width="382" height="34"/>
+                                <rect key="frame" x="16" y="39" width="382" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="vEe-Qf-nmt"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xbn-Cm-2V6">
-                                <rect key="frame" x="0.0" y="84" width="414" height="728"/>
+                                <rect key="frame" x="0.0" y="84" width="414" height="778"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="0.0" id="bbQ-Pr-UbX">
                                     <size key="itemSize" width="180" height="279"/>
@@ -62,8 +65,11 @@
                                 </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jeo-EH-evh">
-                                <rect key="frame" x="16" y="816" width="382" height="50"/>
+                                <rect key="frame" x="12" y="822" width="390" height="40"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="bFw-85-I12"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Search">
                                     <color key="titleColor" systemColor="systemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -80,22 +86,21 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="64l-S7-0zL" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="40" id="7hP-FM-8Ge"/>
+                            <constraint firstItem="jeo-EH-evh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="12" id="AAv-XX-5TS"/>
                             <constraint firstItem="xbn-Cm-2V6" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="GfV-ye-gWB"/>
                             <constraint firstItem="xbn-Cm-2V6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="KU1-p1-bTR"/>
-                            <constraint firstItem="jeo-EH-evh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="X8d-J7-Uua"/>
-                            <constraint firstItem="jeo-EH-evh" firstAttribute="top" secondItem="xbn-Cm-2V6" secondAttribute="bottom" constant="4" id="a9k-py-T8v"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jeo-EH-evh" secondAttribute="trailing" constant="12" id="T5P-Pb-GLr"/>
                             <constraint firstItem="64l-S7-0zL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="bFY-gk-8pu"/>
+                            <constraint firstItem="jeo-EH-evh" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="er0-DX-MpJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xbn-Cm-2V6" secondAttribute="trailing" id="idR-ly-b2F"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="64l-S7-0zL" secondAttribute="trailing" constant="16" id="ixK-1p-IG9"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jeo-EH-evh" secondAttribute="trailing" constant="16" id="lbl-vb-A5M"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="xbn-Cm-2V6" secondAttribute="bottom" constant="50" id="py2-vP-2eG"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="xbn-Cm-2V6" secondAttribute="bottom" id="py2-vP-2eG"/>
                             <constraint firstItem="xbn-Cm-2V6" firstAttribute="top" secondItem="64l-S7-0zL" secondAttribute="bottom" constant="10" id="rr9-Q6-c51"/>
-                            <constraint firstItem="jeo-EH-evh" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="4" id="v9Z-Tc-vmz"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="searchBtn" destination="jeo-EH-evh" id="gar-fa-nsI"/>
                         <outlet property="selectedImagesCollectionView" destination="xbn-Cm-2V6" id="3UY-wa-VdH"/>
                         <outlet property="userSearchPhtoTextField" destination="64l-S7-0zL" id="J3c-sK-saN"/>
                     </connections>
